@@ -1,6 +1,13 @@
+<style>
+    .with-child {
+        cursor: pointer
+    }
+</style>
+
 {% for place in places recursive %}
-<li>{{ place.name }}</li>
+<li class="{% if place.children %}with-child{% endif %}" data-bs-toggle="collapse" data-bs-target="#id{{ place.id }}">{{
+    place.name }}</li>
 {% if place.children %}
-<ul>{{ loop(place.children) }}</ul>
+<ul class="collapse show" id="id{{ place.id }}">{{ loop(place.children) }}</ul>
 {% endif%}
 {% endfor %}
