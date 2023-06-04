@@ -46,3 +46,9 @@ def login():
 
     # if GET /account/login
     return render_template("login.html")
+
+
+@app.route("/account/logout")
+def logout():
+    session["username"] = None
+    return redirect("/")
