@@ -68,4 +68,16 @@ def get_territories():
     if response.status_code != 200:
         return render_template("territories.html", places=[])
 
-    return render_template("territories.html", places="")
+    # Nest data for territories.html
+    data = json.loads(response.text)["data"]
+
+    nested_data = []
+
+    areas = [t for t in data if not t["parent"]]
+
+    for area in areas:
+        a = area.copy()
+        a["children"] = get_child(area, data)
+        nested_data.append(a)
+
+    return render_template("territories.html", places=nested_data)
