@@ -1,0 +1,6 @@
+{% for place in places recursive %}
+<li>{{ place.name }}</li>
+{% if place.children %}
+<ul>{{ loop(place.children) }}</ul>
+{% endif%}
+{% endfor %}
