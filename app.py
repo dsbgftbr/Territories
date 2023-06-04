@@ -52,3 +52,11 @@ def login():
 def logout():
     session["username"] = None
     return redirect("/")
+
+
+@app.route("/territories")
+def get_territories():
+    if not session.get("username"):
+        return redirect("/account/login")
+
+    return render_template("territories.html")
