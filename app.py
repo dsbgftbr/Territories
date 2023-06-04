@@ -1,5 +1,7 @@
 from flask import Flask, flash, redirect, request, render_template, session
 from flask_session import Session
+from helpers import get_child
+import json
 import requests
 
 
@@ -59,4 +61,11 @@ def get_territories():
     if not session.get("username"):
         return redirect("/account/login")
 
-    return render_template("territories.html")
+    # Get territories from API
+    url = "https://netzwelt-devtest.azurewebsites.net/Territories/All"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        return render_template("territories.html", places=[])
+
+    return render_template("territories.html", places="")
