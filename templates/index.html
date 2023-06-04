@@ -9,14 +9,20 @@
 
 <br>
 
-<div class="territories">
+<div>
     <h2>Territories</h2>
     <small>Here are the list of territories</small>
 
     <br>
 
-    <ul>
-    </ul>
+    <ul id="territories"></ul>
 </div>
 
+<script>
+    addEventListener("DOMContentLoaded", async function () {
+        let response = await fetch('/territories');
+        let html = await response.text();
+        document.getElementById("territories").innerHTML = html;
+    })
+</script>
 {% endblock %}
