@@ -1,5 +1,6 @@
 from flask import Flask, flash, redirect, request, render_template, session
 from flask_session import Session
+import requests
 
 
 # Configure app
@@ -30,6 +31,18 @@ def login():
             flash("Invalid username or password")
             return redirect("/account/login")
 
-        pass
+        # Validate using SignIn API
+        url = "https://netzwelt-devtest.azurewebsites.net/Account/SignIn"
+        param = {"username": username, "password": password}
 
+        response = requests.post(url, json=param)
+
+        if response.status_code != 200:
+            flash("Invalid username or password")
+            return redirect("/account/login")
+
+        session["username"] = username
+        return redirect("/")
+
+    # if GET /account/login
     return render_template("login.html")
